@@ -1,7 +1,10 @@
 <h1>JavaModularProject-Ant</h1>
-<h3>Author: Airondlph</h3>
-<br/>
 <p>Base build project for a java modular project using apache ant.</p>
+
+<hr/>
+
+<h2>Author</h2>
+<h3>Airondlph</h3>
 
 <hr/>
 
