@@ -3,8 +3,10 @@
 
 <hr/>
 
-<h2>Author</h2>
-<h3>Airondlph</h3>
+<h2>Authors</h2>
+<ul>
+	<li style="font-size: 14px; font-weight: bold;">Airondlph</li>
+</ul>
 
 <hr/>
 
