@@ -1,4 +1,7 @@
-<project name="Proyecto" default="dist" basedir=".">
+<!-- ##################### -->
+<!-- # @author Airondlph # -->
+<!-- ##################### -->
+<project name="JavaModularProject" default="dist" basedir=".">
 	<description>Builds, tests, and runs the project: ${ant.project.name}</description>
 
 	<target name="load-properties">
@@ -12,24 +15,24 @@
 		<echo> - Ant: ${ant.version}</echo>
         <echo />
         <echo>Modules:</echo>
-        <echo> - Modulo1</echo>
-        <echo> - Modulo1 Test</echo>
-        <echo> - Modulo2</echo>
-        <echo> - Modulo2 Test</echo>
+        <echo> - FirstModule</echo>
+        <echo> - FirstModule-test</echo>
+        <echo> - SecondModule</echo>
+        <echo> - SecondModule-test</echo>
 	</target>
 	
 	<target name="init" depends="load-properties">
 		<tstamp/>
 	</target>
     
-	<target name="clean" depends="init, load-properties, clean-modulo1, clean-modulo1-test, clean-modulo2, clean-modulo2-test">
+	<target name="clean" depends="init, load-properties, clean-firstmodule, clean-firstmodule-test, clean-secondmodule, clean-secondmodule-test">
         <delete dir="${build.dir}" />
         <delete dir="${dist.dir}" />
     </target>
     <target name="clean-all" depends="clean"/>
-	<target name="build" depends="init, load-properties, clean, build-modulo1, build-modulo1-test, build-modulo2, build-modulo2-test" />
-	<target name="dist" depends="init, load-properties, clean, build, dist-modulo1, dist-modulo1-test, dist-modulo2, dist-modulo2-test" />
-    <target name="run" depends="init, load-properties, clean, dist, run-modulo2" />
+	<target name="build" depends="init, load-properties, clean, build-firstmodule, build-firstmodule-test, build-secondmodule, build-secondmodule-test" />
+	<target name="dist" depends="init, load-properties, clean, build, dist-firstmodule, dist-firstmodule-test, dist-secondmodule, dist-secondmodule-test" />
+    <target name="run" depends="init, load-properties, clean, dist, run-secondmodule" />
 	<target name="javadoc" depends="init, clean" />
 
 <!--
@@ -40,20 +43,20 @@
 	
 
 <!--
-    ################
-    ### MODULO 1 ###
-    ################
+    ####################
+    ### FIRST MODULE ###
+    ####################
 -->
 
-    <target name="clean-modulo1" depends="init, load-properties">
-        <delete dir="${modulo1.build.dir}" />
-        <delete dir="${modulo1.dist.dir}" />
+    <target name="clean-firstmodule" depends="init, load-properties">
+        <delete dir="${firstModule.build.dir}" />
+        <delete dir="${firstModule.dist.dir}" />
     </target>
 
-    <target name="build-modulo1" depends="init, load-properties, clean-modulo1">
-        <mkdir dir="${modulo1.build.dir}" />
+    <target name="build-firstmodule" depends="init, load-properties, clean-firstmodule">
+        <mkdir dir="${firstModule.build.dir}" />
        
-        <path id="classpath-modulo1">
+        <path id="classpath-firstmodule">
             <!--
             <fileset dir="${lib.dir}">
                 <include name="**/*.jar"/>
@@ -61,208 +64,208 @@
             -->
         </path>
 
-        <path id="modulepath-modulo1">
+        <path id="modulepath-firstmodule">
             <pathelement location="${lib.dir}" />
         </path>
 
-        <javac destdir="${modulo1.build.dir}">
-            <src path="${modulo1.src.dir}" />
-            <classpath refid="classpath-modulo1" />
-            <modulepath refid="modulepath-modulo1" />
+        <javac destdir="${firstModule.build.dir}">
+            <src path="${firstModule.src.dir}" />
+            <classpath refid="classpath-firstmodule" />
+            <modulepath refid="modulepath-firstmodule" />
         </javac>
     </target>
 
-    <target name="dist-modulo1" depends="init, load-properties, build-modulo1">
-        <mkdir dir="${modulo1.dist.dir}" />
-        <jar destfile="${modulo1.dist.dir}/${modulo1.jar.name}"
-            basedir="${modulo1.build.dir}"
+    <target name="dist-firstmodule" depends="init, load-properties, build-firstmodule">
+        <mkdir dir="${firstModule.dist.dir}" />
+        <jar destfile="${firstModule.dist.dir}/${firstModule.jar.name}"
+            basedir="${firstModule.build.dir}"
             includes="**/*.class">
             <manifest>
-                <attribute name="Main-Class" value="${modulo1.mainClass}" />
+                <attribute name="Main-Class" value="${firstModule.mainClass}" />
             </manifest>
         </jar>
     </target>
 
 
-    <target name="run-modulo1" depends="init, load-properties, dist-modulo1">
-        <path id="modulepath-modulo1">
+    <target name="run-firstmodule" depends="init, load-properties, dist-firstmodule">
+        <path id="modulepath-firstmodule">
             <pathelement location="${lib.dir}" />
-            <pathelement location="${modulo1.dist.dir}" />
+            <pathelement location="${firstModule.dist.dir}" />
         </path>
                 
         <java fork="true" 
             failonerror="true"
-            module="${modulo1.module}"
-            classname="${modulo1.mainClass}"
-            modulepathref="modulepath-modulo1" />
+            module="${firstModule.module}"
+            classname="${firstModule.mainClass}"
+            modulepathref="modulepath-firstmodule" />
     </target>
 
 
 <!--
-    #######################
-    ### MODULO 1 - Test ###
-    #######################
+    ###########################
+    ### FIRST MODULE - Test ###
+    ###########################
 -->
 
-    <target name="clean-modulo1-test" depends="init, load-properties">
-        <delete dir="${modulo1.test.build.dir}" />
-        <delete dir="${modulo1.test.dist.dir}" />
+    <target name="clean-firstmodule-test" depends="init, load-properties">
+        <delete dir="${firstModule.test.build.dir}" />
+        <delete dir="${firstModule.test.dist.dir}" />
     </target>
 
-    <target name="build-modulo1-test" depends="init, load-properties, clean-modulo1-test, dist-modulo1">
-        <mkdir dir="${modulo1.test.build.dir}" />
+    <target name="build-firstmodule-test" depends="init, load-properties, clean-firstmodule-test, dist-firstmodule">
+        <mkdir dir="${firstModule.test.build.dir}" />
 
-        <path id="classpath-modulo1-test">
+        <path id="classpath-firstmodule-test">
         </path>
 
-        <path id="modulepath-modulo1-test">
-            <pathelement location="${modulo1.dist.dir}" />
+        <path id="modulepath-firstmodule-test">
+            <pathelement location="${firstModule.dist.dir}" />
         </path>
         
-        <javac destdir="${modulo1.test.build.dir}">
-            <src path="${modulo1.test.src.dir}" />
-            <classpath refid="classpath-modulo1-test" />
-            <modulepath refid="modulepath-modulo1-test" />
+        <javac destdir="${firstModule.test.build.dir}">
+            <src path="${firstModule.test.src.dir}" />
+            <classpath refid="classpath-firstmodule-test" />
+            <modulepath refid="modulepath-firstmodule-test" />
         </javac>
     </target>
 
 
-    <target name="dist-modulo1-test" depends="init, load-properties, build-modulo1-test">
-        <mkdir dir="${modulo1.test.dist.dir}" />
-        <jar destfile="${modulo1.test.dist.dir}/${modulo1.test.jar.name}"
-            basedir="${modulo1.test.build.dir}"
+    <target name="dist-firstmodule-test" depends="init, load-properties, build-firstmodule-test">
+        <mkdir dir="${firstModule.test.dist.dir}" />
+        <jar destfile="${firstModule.test.dist.dir}/${firstModule.test.jar.name}"
+            basedir="${firstModule.test.build.dir}"
             includes="**/*.class">
             <manifest>
-                <attribute name="Main-Class" value="${modulo1.test.mainClass}" />
+                <attribute name="Main-Class" value="${firstModule.test.mainClass}" />
             </manifest>
         </jar>
     </target>
 
 
-    <target name="run-modulo1-test" depends="init, load-properties, dist-modulo1-test">
-        <path id="modulo1-test-modulepath">
-            <pathelement location="${modulo1.test.dist.dir}"/>
-            <pathelement location="${modulo1.dist.dir}"/>
+    <target name="run-firstmodule-test" depends="init, load-properties, dist-firstmodule-test">
+        <path id="firstmodule-test-modulepath">
+            <pathelement location="${firstModule.test.dist.dir}"/>
+            <pathelement location="${firstModule.dist.dir}"/>
             <pathelement location="${lib.dir}"/>
         </path>
 
         <java fork="true" 
             failonerror="true"
-            module="${modulo1.test.module}"
-            classname="${modulo1.test.mainClass}"
-            modulepathref="modulo1-test-modulepath" />
+            module="${firstModule.test.module}"
+            classname="${firstModule.test.mainClass}"
+            modulepathref="firstmodule-test-modulepath" />
     </target>
 
 
 <!--
-    ################
-    ### MODULO 2 ###
-    ################
+    #####################
+    ### SECOND MODULE ###
+    #####################
 -->
 
-    <target name="clean-modulo2" depends="init, load-properties">
-        <delete dir="${modulo2.build.dir}" />
-        <delete dir="${modulo2.dist.dir}" />
+    <target name="clean-secondmodule" depends="init, load-properties">
+        <delete dir="${secondModule.build.dir}" />
+        <delete dir="${secondModule.dist.dir}" />
     </target>
 
-    <target name="build-modulo2" depends="init, load-properties, clean-modulo2, dist-modulo1">
-        <mkdir dir="${modulo2.build.dir}" />
+    <target name="build-secondmodule" depends="init, load-properties, clean-secondmodule, dist-firstmodule">
+        <mkdir dir="${secondModule.build.dir}" />
         
-        <path id="classpath-modulo2">
+        <path id="classpath-secondmodule">
         </path>
     
-        <path id="modulepath-modulo2">
+        <path id="modulepath-secondmodule">
             <pathelement location="${lib.dir}" />
-            <pathelement location="${modulo1.dist.dir}" />
+            <pathelement location="${firstModule.dist.dir}" />
         </path>
 
-        <javac destdir="${modulo2.build.dir}">
-            <src path="${modulo2.src.dir}" />
-            <classpath refid="classpath-modulo2" />
-            <modulepath refid="modulepath-modulo2" />
+        <javac destdir="${secondModule.build.dir}">
+            <src path="${secondModule.src.dir}" />
+            <classpath refid="classpath-secondmodule" />
+            <modulepath refid="modulepath-secondmodule" />
         </javac>
     </target>
 
-    <target name="dist-modulo2" depends="init, load-properties, build-modulo2">
-        <mkdir dir="${modulo2.dist.dir}" />
+    <target name="dist-secondmodule" depends="init, load-properties, build-secondmodule">
+        <mkdir dir="${secondModule.dist.dir}" />
 
-        <jar destfile="${modulo2.dist.dir}/${modulo2.jar.name}"
-            basedir="${modulo2.build.dir}"
+        <jar destfile="${secondModule.dist.dir}/${secondModule.jar.name}"
+            basedir="${secondModule.build.dir}"
             includes="**/*.class">
             <manifest>
-                <attribute name="Main-Class" value="${modulo2.mainClass}" />
+                <attribute name="Main-Class" value="${secondModule.mainClass}" />
             </manifest>
         </jar>
     </target>
 
-    <target name="run-modulo2" depends="init, load-properties, dist-modulo2">
-        <path id="modulepath-modulo2">
+    <target name="run-secondmodule" depends="init, load-properties, dist-secondmodule">
+        <path id="modulepath-secondmodule">
             <pathelement location="${lib.dir}" />
-            <pathelement location="${modulo1.dist.dir}" />
-            <pathelement location="${modulo2.dist.dir}" />
+            <pathelement location="${firstModule.dist.dir}" />
+            <pathelement location="${secondModule.dist.dir}" />
         </path>
             
         <java fork="true" 
             failonerror="true"
-            module="${modulo2.module}"
-            classname="${modulo2.mainClass}"
-            modulepathref="modulepath-modulo2" />
+            module="${secondModule.module}"
+            classname="${secondModule.mainClass}"
+            modulepathref="modulepath-secondmodule" />
 
     </target>
 
 
 <!--
-    #######################
-    ### MODULO 2 - Test ###
-    #######################
+    ############################
+    ### SECOND MODULE - Test ###
+    ############################
 -->
 
-    <target name="clean-modulo2-test" depends="init, load-properties">
-        <delete dir="${modulo2.test.build.dir}" />
-        <delete dir="${modulo2.test.dist.dir}" />
+    <target name="clean-secondmodule-test" depends="init, load-properties">
+        <delete dir="${secondModule.test.build.dir}" />
+        <delete dir="${secondModule.test.dist.dir}" />
     </target>
 
-    <target name="build-modulo2-test" depends="init, load-properties, clean-modulo2-test, dist-modulo2">
-        <mkdir dir="${modulo2.test.build.dir}" />
+    <target name="build-secondmodule-test" depends="init, load-properties, clean-secondmodule-test, dist-secondmodule">
+        <mkdir dir="${secondModule.test.build.dir}" />
         
-        <path id="classpath-modulo2-test">
+        <path id="classpath-secondmodule-test">
         </path>
 
-        <path id="modulepath-modulo2-test">
-            <pathelement location="${modulo2.dist.dir}" />
+        <path id="modulepath-secondmodule-test">
+            <pathelement location="${secondModule.dist.dir}" />
         </path>
         
-        <javac destdir="${modulo2.test.build.dir}">
-            <src path="${modulo2.test.src.dir}" />
-            <classpath refid="classpath-modulo2-test" />
-            <modulepath refid="modulepath-modulo2-test" />
+        <javac destdir="${secondModule.test.build.dir}">
+            <src path="${secondModule.test.src.dir}" />
+            <classpath refid="classpath-secondmodule-test" />
+            <modulepath refid="modulepath-secondmodule-test" />
         </javac>
     </target>
 
-    <target name="dist-modulo2-test" depends="init, load-properties, build-modulo2-test">
-        <mkdir dir="${modulo2.test.dist.dir}" />
-        <jar destfile="${modulo2.test.dist.dir}/${modulo2.test.jar.name}"
-            basedir="${modulo2.test.build.dir}"
+    <target name="dist-secondmodule-test" depends="init, load-properties, build-secondmodule-test">
+        <mkdir dir="${secondModule.test.dist.dir}" />
+        <jar destfile="${secondModule.test.dist.dir}/${secondModule.test.jar.name}"
+            basedir="${secondModule.test.build.dir}"
             includes="**/*.class">
             <manifest>
-                <attribute name="Main-Class" value="${modulo2.test.mainClass}" />
+                <attribute name="Main-Class" value="${secondModule.test.mainClass}" />
             </manifest>
         </jar>
     </target>
 
-    <target name="run-modulo2-test" depends="init, load-properties, dist-modulo2-test">
-        <path id="modulepath-modulo2-test">
+    <target name="run-secondmodule-test" depends="init, load-properties, dist-secondmodule-test">
+        <path id="modulepath-secondmodule-test">
             <pathelement location="${lib.dir}"/>
-            <pathelement location="${modulo1.dist.dir}"/>
-            <pathelement location="${modulo2.dist.dir}"/>
-            <pathelement location="${modulo2.test.dist.dir}"/>
+            <pathelement location="${firstModule.dist.dir}"/>
+            <pathelement location="${secondModule.dist.dir}"/>
+            <pathelement location="${secondModule.test.dist.dir}"/>
         </path>
 
         <java fork="true" 
             failonerror="true"
-            module="${modulo2.test.module}"
-            classname="${modulo2.test.mainClass}"
-            modulepathref="modulepath-modulo2-test" />
+            module="${secondModule.test.module}"
+            classname="${secondModule.test.mainClass}"
+            modulepathref="modulepath-secondmodule-test" />
 
     </target>
 

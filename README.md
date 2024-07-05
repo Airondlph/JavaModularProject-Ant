@@ -1,4 +1,5 @@
 <h1>JavaModularProject-Ant</h1>
+<h3 align="right">Author: Airondlph</h3>
 <p>Base build project for a java modular project using apache ant.</p>
 
 <hr/>
@@ -12,8 +13,8 @@
  build project created for 4 modules as an example.</p>
 
 <ul>
-	<li>Modulo1: Example module</li>
-	<li>Modulo1-test: Example of a test-module for the first module (Modulo 1)</li>
-	<li>Modulo2: Example module</li>
-	<li>Modulo2-test: Example of a test-module for the third module (Modulo 2)</li>
+	<li>FirstModule: Example module</li>
+	<li>FirstModule-test: Example of a test-module for the first module (First Module)</li>
+	<li>SecondModule: Example module</li>
+	<li>SecondModule-test: Example of a test-module for the second module (Second Module)</li>
 </ul>
