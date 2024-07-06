@@ -29,18 +29,23 @@
         <delete dir="${build.dir}" />
         <delete dir="${dist.dir}" />
     </target>
+
     <target name="clean-all" depends="clean"/>
+
 	<target name="build" depends="init, load-properties, clean, build-firstmodule, build-firstmodule-test, build-secondmodule, build-secondmodule-test" />
-	<target name="dist" depends="init, load-properties, clean, build, dist-firstmodule, dist-firstmodule-test, dist-secondmodule, dist-secondmodule-test" />
-    <target name="run" depends="init, load-properties, clean, dist, run-secondmodule" />
-	<target name="javadoc" depends="init, clean" />
-
-<!--
-	<target name="test" depends="dist, build-tests, dist-tests, run-test">
-
-	</target>
--->
 	
+    <target name="dist" depends="init, load-properties, clean, build, dist-firstmodule, dist-firstmodule-test, dist-secondmodule, dist-secondmodule-test" />
+    
+    <target name="run" depends="init, load-properties, clean, dist, run-secondmodule" />
+
+	<target name="javadoc" depends="init, load-properties">
+        <echo>Not implemented</echo>
+    </target>
+
+    <target name="test" depends="init, load-properties">
+        <!-- JUnit tests -->
+        <echo>Not implemented</echo>
+    </target>
 
 <!--
     ####################
